@@ -43,7 +43,6 @@ describe('Testing Calls specifications', function () {
 
 
     it('Test base call', async function() {
-
         let result = baseCall.toJson();
 
         expect(result).to.deep.equal({
@@ -55,7 +54,6 @@ describe('Testing Calls specifications', function () {
             urlParams: { id: '1', name: 'john' },
             json: { param1: 'value1' },
             headers: { a: 1 },
-            response: {}
         });
 
         try {
@@ -93,7 +91,6 @@ describe('Testing Calls specifications', function () {
             title: 'Hello world again',
             description: 'It is a description again',
             verb: 'POST',
-            response: {}
         });
         done();
     });
@@ -110,7 +107,6 @@ describe('Testing Calls specifications', function () {
             title: 'Hello world again',
             description: 'It is a description again',
             urlParams: {id: 2},
-            response: {}
         });
         done();
     });

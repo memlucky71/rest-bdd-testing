@@ -1,28 +1,30 @@
 {
-  "name": "http-object-documenter",
+  "name": "rest-bdd-testing",
   "version": "0.1.0",
-  "description": "",
+  "description": "Toolchain for testing REST API, in BDD style.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha  --require babel-register 'test/test_*.js' --recursive test/helpers.js --require test/init.js --exit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lamasoo/http-object-documenter.git"
+    "url": "git+https://github.com/memlucky71/rest-bdd-testing.git"
   },
   "keywords": [
-    "http",
+    "bdd",
     "rest",
+    "api",
+    "http",
     "document",
-    "request",
-    "response"
+    "test",
+    "testing"
   ],
   "author": "Seyyed Mohammad Borghei",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Lamasoo/http-object-documenter/issues"
+    "url": "https://github.com/memlucky71/rest-bdd-testing/issues"
   },
-  "homepage": "https://github.com/Lamasoo/http-object-documenter#readme",
+  "homepage": "https://github.com/memlucky71/rest-bdd-testing#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.26.3",

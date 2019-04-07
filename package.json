@@ -34,8 +34,8 @@
     "babel-preset-stage-0": "^6.16.0",
     "chai": "^4.2.0",
     "chai-http": "^4.2.0",
-    "mocha": "^6.0.2",
-    "mockserver": "^3.0.0"
+    "chai-subset": "^1.6.0",
+    "mocha": "^6.0.2"
   },
   "dependencies": {
     "request": "^2.88.0",

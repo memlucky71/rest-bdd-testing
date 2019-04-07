@@ -17,7 +17,7 @@ describe('Testing Calls specifications', function () {
 
     let baseCall, app;
 
-    before(function(){
+    before(function(done){
         app = http.createServer((req, res) => {
             let parsedUrl = URL.parse(req.url,true);
             let result = {'url': parsedUrl.pathname};
@@ -27,7 +27,7 @@ describe('Testing Calls specifications', function () {
             }
             res.end(JSON.stringify(result));
             // res.end();
-        }).listen(0,'localhost');
+        }).listen(0,'localhost', done);
 
 
 
@@ -39,6 +39,10 @@ describe('Testing Calls specifications', function () {
                 description: '',
                 headers: {a: 1}
             });
+    });
+
+    after(function(done) {
+        app.close(done);
     });
 
 
@@ -56,28 +60,23 @@ describe('Testing Calls specifications', function () {
             headers: { a: 1 },
         });
 
-        try {
-            baseCall = await baseCall.invoke(app);
+        baseCall = await baseCall.invoke(app);
 
-            expect(baseCall.toJson()).to.deep.equal({
-                title: 'Hello world',
-                description: 'It is description',
-                url: '/apiv1/books/:id/writers/:name',
-                verb: 'GET',
-                query: { fields: '[fullName,age]', sort: '-id' },
-                urlParams: { id: '1', name: 'john' },
-                json: { param1: 'value1' },
-                headers: { a: 1 },
+        expect(baseCall.toJson()).to.deep.equal({
+            title: 'Hello world',
+            description: 'It is description',
+            url: '/apiv1/books/:id/writers/:name',
+            verb: 'GET',
+            query: { fields: '[fullName,age]', sort: '-id' },
+            urlParams: { id: '1', name: 'john' },
+            json: { param1: 'value1' },
+            headers: { a: 1 },
 
-                response: {
-                    url: '/apiv1/books/1/writers/john',
-                    query: { fields: '[fullName,age]', sort: '-id' }
-                }
-            });
-        }
-        catch (err) {
-            expect(false).to.be.true;
-        }
+            response: {
+                url: '/apiv1/books/1/writers/john',
+                query: { fields: '[fullName,age]', sort: '-id' }
+            }
+        });
 
     });
 

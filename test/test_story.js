@@ -9,6 +9,7 @@ import Story from '../lib/story';
 
 const expect = chai.expect;
 
+
 describe('Test Story', function() {
     let baseCall, alteredCall;
 

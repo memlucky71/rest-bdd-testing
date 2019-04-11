@@ -6,11 +6,14 @@ const chai = require('chai');
 const fs = require('fs');
 const http = require('http');
 const URL = require('url');
+const chaiSubset = require('chai-subset');
 
 import BaseCall from '../lib/call/base_call';
 import AlteredCall from '../lib/call/altered_call';
 
+
 const expect = chai.expect;
+chai.use(chaiSubset);
 
 
 describe('Testing Calls specifications', function () {
@@ -20,13 +23,13 @@ describe('Testing Calls specifications', function () {
     before(function(done){
         app = http.createServer((req, res) => {
             let parsedUrl = URL.parse(req.url,true);
-            let result = {'url': parsedUrl.pathname};
+            let result = {'url': parsedUrl.pathname, 'requestHeaders': req.headers};
 
             if (parsedUrl.query) {
                 result['query'] = parsedUrl.query;
             }
             res.end(JSON.stringify(result));
-            // res.end();
+
         }).listen(0,'localhost', done);
 
 
@@ -62,7 +65,7 @@ describe('Testing Calls specifications', function () {
 
         baseCall = await baseCall.invoke(app);
 
-        expect(baseCall.toJson()).to.deep.equal({
+        expect(baseCall.toJson()).to.containSubset({
             title: 'Hello world',
             description: 'It is description',
             url: '/apiv1/books/:id/writers/:name',
@@ -74,7 +77,8 @@ describe('Testing Calls specifications', function () {
 
             response: {
                 url: '/apiv1/books/1/writers/john',
-                query: { fields: '[fullName,age]', sort: '-id' }
+                query: { fields: '[fullName,age]', sort: '-id' },
+                requestHeaders: {a: "1"}
             }
         });
 

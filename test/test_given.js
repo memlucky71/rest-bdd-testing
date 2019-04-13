@@ -43,7 +43,6 @@ describe('Test given', function() {
             url: '/apiv1/books/id: 1/writers/name:john?fields=[fullName,age]&sort=-id',
             verb: 'GET',
             json: {param1: 'value1', param2: 'value2'},
-            description: '',
             headers: {a: 1}
         });
 

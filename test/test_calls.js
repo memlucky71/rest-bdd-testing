@@ -28,6 +28,7 @@ describe('Testing Calls specifications', function () {
             if (parsedUrl.query) {
                 result['query'] = parsedUrl.query;
             }
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
             res.end(JSON.stringify(result));
 
         }).listen(0,'localhost', done);
@@ -75,9 +76,16 @@ describe('Testing Calls specifications', function () {
             headers: { a: 1 },
 
             response: {
-                url: '/apiv1/books/1/writers/john',
-                query: { fields: '[fullName,age]', sort: '-id' },
-                requestHeaders: {a: "1"}
+                status: 200,
+                headers: {
+                    'content-type': 'application/json; charset=utf-8',
+                    'content-length': '243'
+                },
+                json: {
+                    url: '/apiv1/books/1/writers/john',
+                    query: { fields: '[fullName,age]', sort: '-id' },
+                    requestHeaders: {a: "1"}
+                }
             }
         });
 

@@ -26,6 +26,7 @@ describe('Test given', function() {
             if (parsedUrl.query) {
                 result['query'] = parsedUrl.query;
             }
+            res.setHeader('Content-Type', 'application/json; charset=utf-8');
             res.end(JSON.stringify(result));
 
         }).listen(0,'localhost', done);
@@ -65,9 +66,16 @@ describe('Test given', function() {
        let baseCall = await given.requestBaseCall();
 
         expect(baseCall.toJson().response).to.containSubset({
-            url: '/apiv1/books/1/writers/john',
-            query: { fields: '[fullName,age]', sort: '-id' },
-            requestHeaders: {a: "1"}
+            status: 200,
+            json: {
+                url: '/apiv1/books/1/writers/john',
+                query: { fields: '[fullName,age]', sort: '-id' },
+                requestHeaders: {a: "1"}
+            },
+            headers: {
+                "content-length": "243",
+                "content-type": "application/json; charset=utf-8"
+            }
         });
 
     });

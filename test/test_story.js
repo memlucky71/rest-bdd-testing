@@ -6,6 +6,7 @@ const chai = require('chai');
 
 import {BaseCall, AlteredCall} from '../index';
 import Story from '../lib/story';
+import Response from '../lib/reponse';
 
 const expect = chai.expect;
 
@@ -20,10 +21,14 @@ describe('Test Story', function() {
                 verb: 'GET',
                 json: {param1: 'value1'},
                 description: '',
-                headers: {a: 1}
+                headers: {a: 1},
+                response: new Response(200, {'content-type': 'application/json'}, {body:null, json:{param2: 'param2'}})
             });
 
-        alteredCall = new AlteredCall(baseCall, 'Hello world again', 'It is a description again', {verb: 'POST'})
+        alteredCall = new AlteredCall(baseCall, 'Hello world again', 'It is a description again', {
+            verb: 'POST',
+            response: new Response(200, {'content-type': 'application/json'}, {body:null, json:{param2: 'param2'}})
+        })
 
 
     });
@@ -42,12 +47,30 @@ describe('Test Story', function() {
                 urlParams: {id: '1', name: 'john'},
                 json: {param1: 'value1'},
                 headers: {a: 1},
+                response: {
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    json: {
+                        param2: 'param2'
+                    },
+                    status: 200
+                }
             },
             calls: [
                 {
                     title: 'Hello world again',
                     verb: 'POST',
                     description: 'It is a description again',
+                    response: {
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        json: {
+                            param2: 'param2'
+                        },
+                        status: 200
+                    }
                 }
             ]
         });
@@ -65,14 +88,30 @@ describe('Test Story', function() {
                 urlParams: {id: '1', name: 'john'},
                 json: {param1: 'value1'},
                 headers: {a: 1},
-                response: {b: 2}
+                response: {
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    json: {
+                        param2: 'param2'
+                    },
+                    status: 200
+                }
             },
             calls: [
                 {
                     title: 'Hello world again',
                     verb: 'POST',
                     description: 'It is a description again',
-                    response: {b: 3}
+                    response: {
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        json: {
+                            param2: 'param2'
+                        },
+                        status: 200
+                    }
                 }
             ]
         };

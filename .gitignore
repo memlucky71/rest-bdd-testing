@@ -93,4 +93,4 @@ test/temp/*
 !test/temp/.keep
 
 # build
-# dist
+dist

@@ -29,11 +29,11 @@ describe('Test Markdown Formatter', function() {
 
     it('Test methods', function(done) {
         markdownFormatter.writeHeader('This is title level 1');
-        markdownFormatter.writeHeader('This is title level 2', {level: 2});
+        markdownFormatter.writeHeader('This is title level 2', 2);
         markdownFormatter.writeParagraph('This is paragraph');
         markdownFormatter.writeList(['Item 1', 'Item 2']);
         markdownFormatter.writeTable([['a1', 'b1', 'c1'], ['a2', ['b2'], ['c2']]]);
-        markdownFormatter.writeTable([['a1', 'b1', 'c1'], ['a2', ['b2'], ['c2']]], {headers: ['A', 'B', 'C']});
+        markdownFormatter.writeTable([['a1', 'b1', 'c1'], ['a2', ['b2'], ['c2']]], ['A', 'B', 'C']);
 
         expect(fs.existsSync(docFilePath)).to.be.true;
         let docContent = fs.readFileSync(docFilePath, 'utf8');

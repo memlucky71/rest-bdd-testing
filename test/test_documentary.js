@@ -27,16 +27,22 @@ describe('Test Documentary', function() {
                 json: { param1: 'value1', param2: 'value2' },
                 headers: { a: 1 },
                 response: {
-                    url: '/apiv1/books/1/writers/john',
-                    requestHeaders: {
-                        a: '1',
-                        host: '127.0.0.1:65320',
-                        accept: 'application/json',
-                        'content-type': 'application/json',
-                        'content-length': '37',
-                        connection: 'close'
+                    headers: {
+                        'content-type': 'application/json'
                     },
-                    query: { fields: '[fullName,age]', sort: '-id' }
+                    status: 200,
+                    json: {
+                        url: '/apiv1/books/1/writers/john',
+                        requestHeaders: {
+                            a: '1',
+                            host: '127.0.0.1:65320',
+                            accept: 'application/json',
+                            'content-type': 'application/json',
+                            'content-length': '37',
+                            connection: 'close'
+                        },
+                        query: { fields: '[fullName,age]', sort: '-id' }
+                    }
                 }
             },
             calls: [{
@@ -45,63 +51,91 @@ describe('Test Documentary', function() {
                 headers: { a: 1, b: 2 },
                 description: 'Given when description',
                 response: {
-                    url: '/apiv1/books/1/writers/john',
-                    requestHeaders: {
-                        a: '1',
-                        b: '2',
-                        host: '127.0.0.1:65320',
-                        accept: 'application/json',
-                        'content-type': 'application/json',
-                        'content-length': '55',
-                        connection: 'close'
+                    headers: {
+                        'content-type': 'application/json'
                     },
-                    query: { fields: '[fullName,age]', sort: '-id' }
+                    status: 200,
+                    json: {
+                        url: '/apiv1/books/1/writers/john',
+                        requestHeaders: {
+                            a: '1',
+                            b: '2',
+                            host: '127.0.0.1:65320',
+                            accept: 'application/json',
+                            'content-type': 'application/json',
+                            'content-length': '55',
+                            connection: 'close'
+                        },
+                        query: { fields: '[fullName,age]', sort: '-id' }
+                    }
                 }
             }]
         };
         expectedMarkdown =
-`# Given Title
+`## Given Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given description
 
-# Url Parameters
+### Url Parameters
 
 Name | Example
 ---|---
 id | 1
 name | john
 
-# Query Strings
+### Query Strings
 
 Name | Example
 ---|---
 fields | [fullName,age]
 sort | -id
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
 param1 | ? | ? | value1
 param2 | ? | ? | value2
 
-# Request Headers
+### Request Headers
 
 * a: 1
 
-# Response: undefined
+### Response: 200
+
+#### Body:
+
+Content-Type: application/json
+
+\`\`\`json
+{
+    "url": "/apiv1/books/1/writers/john",
+    "requestHeaders": {
+        "a": "1",
+        "host": "127.0.0.1:65320",
+        "accept": "application/json",
+        "content-type": "application/json",
+        "content-length": "37",
+        "connection": "close"
+    },
+    "query": {
+        "fields": "[fullName,age]",
+        "sort": "-id"
+    }
+}
+\`\`\`
 
 ---
 
-# WHEN: Given When Title
+## WHEN: Given When Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given when description
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
@@ -109,12 +143,35 @@ param1 | ? | ? | value1
 param2 | ? | ? | value2
 param3 | ? | ? | value3
 
-# Request Headers
+### Request Headers
 
 * a: 1
 * b: 2
 
-# Response: undefined`
+### Response: 200
+
+#### Body:
+
+Content-Type: application/json
+
+\`\`\`json
+{
+    "url": "/apiv1/books/1/writers/john",
+    "requestHeaders": {
+        "a": "1",
+        "b": "2",
+        "host": "127.0.0.1:65320",
+        "accept": "application/json",
+        "content-type": "application/json",
+        "content-length": "55",
+        "connection": "close"
+    },
+    "query": {
+        "fields": "[fullName,age]",
+        "sort": "-id"
+    }
+}
+\`\`\``
 
     });
 

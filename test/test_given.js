@@ -8,8 +8,8 @@ const chai = require('chai');
 const URL = require('url');
 const chaiSubset = require('chai-subset');
 
-import Given from '../lib/given';
-import {Update, Append, Remove} from '../lib/manipulation';
+// import Given from '../lib/given';
+import {Given, Update, Append, Remove} from '../lib';
 
 const expect = chai.expect;
 chai.use(chaiSubset);
@@ -24,45 +24,45 @@ describe('Test given', function() {
         dumpFilePath = `${__dirname}/temp/markdown3.json`;
 
         expectedMarkdown =
-            `# Given Title
+`## Given Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given description
 
-# Url Parameters
+### Url Parameters
 
 Name | Example
 ---|---
 id | 1
 name | john
 
-# Query Strings
+### Query Strings
 
 Name | Example
 ---|---
 fields | [fullName,age]
 sort | -id
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
 param1 | ? | ? | value1
 param2 | ? | ? | value2
 
-# Request Headers
+### Request Headers
 
 * a: 1
 
-# Response: 200
+### Response: 200
 
-# Headers
+#### Headers
 
 * connection: close
 * content-length: 218
 
-# Body:
+#### Body:
 
 Content-Type: application/json
 
@@ -85,26 +85,26 @@ Content-Type: application/json
 
 ---
 
-# WHEN: Given When Title
+## WHEN: Given When Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given when description
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
 newParam | ? | ? | new param
 
-# Response: 200
+### Response: 200
 
-# Headers
+#### Headers
 
 * connection: close
 * content-length: 218
 
-# Body:
+#### Body:
 
 Content-Type: application/json
 
@@ -127,31 +127,31 @@ Content-Type: application/json
 
 ---
 
-# WHEN: Given When Title
+## WHEN: Given When Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given when description
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
 param1 | ? | ? | new value
 param2 | ? | ? | value2
 
-# Request Headers
+### Request Headers
 
 * a: 2
 
-# Response: 200
+### Response: 200
 
-# Headers
+#### Headers
 
 * connection: close
 * content-length: 218
 
-# Body:
+#### Body:
 
 Content-Type: application/json
 
@@ -174,13 +174,13 @@ Content-Type: application/json
 
 ---
 
-# WHEN: Given When Title
+## WHEN: Given When Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given when description
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
@@ -188,19 +188,19 @@ param1 | ? | ? | value1
 param2 | ? | ? | value2
 param3 | ? | ? | value3
 
-# Request Headers
+### Request Headers
 
 * a: 1
 * b: 2
 
-# Response: 200
+### Response: 200
 
-# Headers
+#### Headers
 
 * connection: close
 * content-length: 226
 
-# Body:
+#### Body:
 
 Content-Type: application/json
 
@@ -224,26 +224,26 @@ Content-Type: application/json
 
 ---
 
-# WHEN: Given When Title
+## WHEN: Given When Title
 
-# GET /apiv1/books/:id/writers/:name
+### GET /apiv1/books/:id/writers/:name
 
 Given when description
 
-# Json
+### Json
 
 Name | Required | Type | Example
 ---|---|---|---
 param2 | ? | ? | value2
 
-# Response: 200
+### Response: 200
 
-# Headers
+#### Headers
 
 * connection: close
 * content-length: 210
 
-# Body:
+#### Body:
 
 Content-Type: application/json
 
@@ -261,6 +261,29 @@ Content-Type: application/json
         "sort": "-id"
     }
 }
+\`\`\`
+
+---
+
+## WHEN: Given When Title
+
+### GET /error/in/response
+
+Given when description
+
+### Response: 404
+
+#### Headers
+
+* connection: close
+* transfer-encoding: chunked
+
+#### Body:
+
+Content-Type: text/plain
+
+\`\`\`
+This should be an Error
 \`\`\``;
 
         expectedJson =
@@ -435,21 +458,44 @@ Content-Type: application/json
                     }
                 }
             }
+        },
+        {
+            "title": "Given When Title",
+            "url": "/error/in/response",
+            "urlParams": {},
+            "query": null,
+            "description": "Given when description",
+            "response": {
+                "status": 404,
+                "headers": {
+                    "content-type": "text/plain",
+                    "connection": "close",
+                    "transfer-encoding": "chunked"
+                },
+                "body": "This should be an Error"
+            }
         }
     ]
 }`;
 
         app = http.createServer((req, res) => {
+            res.removeHeader('date');
             delete req.headers['host'];
             let parsedUrl = URL.parse(req.url,true);
-            let result = {'url': parsedUrl.pathname, 'requestHeaders': req.headers};
 
-            if (parsedUrl.query) {
-                result['query'] = parsedUrl.query;
+            if (parsedUrl.pathname !== '/error/in/response') {
+                let result = {'url': parsedUrl.pathname, 'requestHeaders': req.headers};
+
+                if (parsedUrl.query) {
+                    result['query'] = parsedUrl.query;
+                }
+                res.setHeader('Content-Type', 'application/json; charset=utf-8');
+                res.end(JSON.stringify(result));
+            } else {
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.end('This should be an Error');
             }
-            res.removeHeader('date');
-            res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.end(JSON.stringify(result));
+
 
         }).listen(0,'localhost', done);
     });
@@ -560,6 +606,13 @@ Content-Type: application/json
 
         expect(given.when.bind(given, 'Given When Title', 'Given when description', {json: new Remove(['param3'])}))
             .to.throw('Target container has no key param3');
+    });
+
+    it('Test given when, wrong url, error in response', async function() {
+        let newCall = await given.when('Given When Title', 'Given when description', {
+            url: '/error/in/response'
+        });
+
     });
 
     it('Test given documentation', function(done) {

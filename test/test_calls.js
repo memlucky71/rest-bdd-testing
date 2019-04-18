@@ -23,13 +23,19 @@ describe('Testing Calls specifications', function () {
     before(function(done){
         app = http.createServer((req, res) => {
             let parsedUrl = URL.parse(req.url,true);
-            let result = {'url': parsedUrl.pathname, 'requestHeaders': req.headers};
 
-            if (parsedUrl.query) {
-                result['query'] = parsedUrl.query;
+            if (parsedUrl.pathname === '/error/in/response') {
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.end('This should be an Error');
+            } else {
+                let result = {'url': parsedUrl.pathname, 'requestHeaders': req.headers};
+
+                if (parsedUrl.query) {
+                    result['query'] = parsedUrl.query;
+                }
+                res.setHeader('Content-Type', 'application/json; charset=utf-8');
+                res.end(JSON.stringify(result));
             }
-            res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.end(JSON.stringify(result));
 
         }).listen(0,'localhost', done);
 
@@ -120,6 +126,20 @@ describe('Testing Calls specifications', function () {
         });
         done();
     });
+
+    it('Test response with error', async function() {
+        let baseCall = new BaseCall('Error in response', 'It is description',
+            {
+                url: '/error/in/response',
+                verb: 'GET',
+            });
+
+        baseCall = await baseCall.invoke(app);
+        expect(baseCall.response.toJson()).to.containSubset({
+            status: 404,
+            body: 'This should be an Error'
+        });
+    })
 
 
 

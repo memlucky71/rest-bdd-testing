@@ -89,6 +89,5 @@ docs
 package-lock.json
 
 # test
-test/docs
 test/temp/*
 !test/temp/.keep

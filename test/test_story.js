@@ -4,7 +4,8 @@
 
 const chai = require('chai');
 
-import {BaseCall, AlteredCall} from '../index';
+import BaseCall from '../lib/call/base_call';
+import AlteredCall from '../lib/call/altered_call';
 import Story from '../lib/story';
 import Response from '../lib/reponse';
 

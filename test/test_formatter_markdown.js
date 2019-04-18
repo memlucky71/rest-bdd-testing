@@ -11,14 +11,19 @@ const expect = chai.expect;
 
 
 describe('Test Markdown Formatter', function() {
-    let docFilePath, markdownFormatter;
+    let docFilePath, markdownFormatter, fileDescriptor;
 
-    before(function() {
+    before(function(done) {
         docFilePath = `${__dirname}/temp/markdown.md`;
-        markdownFormatter = new MarkdownFormatter(docFilePath);
+        fs.open(docFilePath, 'w+', function (err, fd) {
+            fileDescriptor = fd;
+            markdownFormatter = new MarkdownFormatter(fileDescriptor);
+            done();
+        });
     });
 
     after(function() {
+        fs.closeSync(fileDescriptor);
         fs.unlinkSync(docFilePath);
     });
 

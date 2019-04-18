@@ -91,6 +91,8 @@ param2 | ? | ? | value2
 
 * a: 1
 
+# Response: undefined
+
 ---
 
 # WHEN: Given When Title
@@ -110,7 +112,9 @@ param3 | ? | ? | value3
 # Request Headers
 
 * a: 1
-* b: 2`
+* b: 2
+
+# Response: undefined`
 
     });
 
@@ -119,12 +123,16 @@ param3 | ? | ? | value3
     });
 
     it('Test a story', function(done) {
+
         let story = Story.fromJson(data);
-        story.document(docFilePath);
-        expect(fs.existsSync(docFilePath)).to.be.true;
-        let docContent = fs.readFileSync(docFilePath, 'utf8');
-        expect(docContent.trim()).to.be.equal(expectedMarkdown);
-        done();
+        fs.open(docFilePath, 'w+', function(err, fd) {
+            story.document(fd);
+            expect(fs.existsSync(docFilePath)).to.be.true;
+            let docContent = fs.readFileSync(docFilePath, 'utf8');
+            expect(docContent.trim()).to.be.equal(expectedMarkdown);
+            fs.close(fd, done);
+        });
+
     });
 
 });

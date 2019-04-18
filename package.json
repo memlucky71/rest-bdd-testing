@@ -4,7 +4,7 @@
   "description": "Toolchain for testing REST API, in BDD style.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha  --require babel-register 'test/test_*.js' --recursive test/helpers.js --require test/init.js --exit"
+    "test": "./node_modules/.bin/mocha  --require babel-register 'test/test_*.js' --exit"
   },
   "repository": {
     "type": "git",

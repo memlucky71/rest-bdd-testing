@@ -341,10 +341,6 @@ This should be an Error
     "calls": [
         {
             "title": "Given When Title",
-            "query": {
-                "fields": "[fullName,age]",
-                "sort": "id"
-            },
             "json": {
                 "newParam": "new param"
             },
@@ -367,14 +363,17 @@ This should be an Error
                     },
                     "query": {
                         "fields": "[fullName,age]",
-                        "sort": "id"
+                        "sort": "-id"
                     }
                 }
             }
         },
         {
             "title": "Given When Title",
-
+            "query": {
+                "fields": "[fullName,age]",
+                "sort": "id"
+            },
             "json": {
                 "param1": "new value",
                 "param2": "value2"
@@ -388,7 +387,7 @@ This should be an Error
                 "headers": {
                     "content-type": "application/json; charset=utf-8",
                     "connection": "close",
-                    "content-length": "218"
+                    "content-length": "217"
                 },
                 "json": {
                     "url": "/apiv1/books/1/writers/john",
@@ -401,7 +400,7 @@ This should be an Error
                     },
                     "query": {
                         "fields": "[fullName,age]",
-                        "sort": "-id"
+                        "sort": "id"
                     }
                 }
             }

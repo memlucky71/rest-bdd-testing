@@ -133,6 +133,13 @@ Content-Type: application/json
 
 Given when description
 
+### Query Strings
+
+Name | Example
+---|---
+fields | [fullName,age]
+sort | id
+
 ### Json
 
 Name | Required | Type | Example
@@ -149,7 +156,7 @@ param2 | ? | ? | value2
 #### Headers
 
 * connection: close
-* content-length: 218
+* content-length: 217
 
 #### Body:
 
@@ -167,7 +174,7 @@ Content-Type: application/json
     },
     "query": {
         "fields": "[fullName,age]",
-        "sort": "-id"
+        "sort": "id"
     }
 }
 \`\`\`
@@ -334,6 +341,10 @@ This should be an Error
     "calls": [
         {
             "title": "Given When Title",
+            "query": {
+                "fields": "[fullName,age]",
+                "sort": "id"
+            },
             "json": {
                 "newParam": "new param"
             },
@@ -356,13 +367,14 @@ This should be an Error
                     },
                     "query": {
                         "fields": "[fullName,age]",
-                        "sort": "-id"
+                        "sort": "id"
                     }
                 }
             }
         },
         {
             "title": "Given When Title",
+
             "json": {
                 "param1": "new value",
                 "param2": "value2"
@@ -562,13 +574,15 @@ This should be an Error
     it('Test given when, update manipulator', async function() {
         let newCall = await given.when('Given When Title', 'Given when description', {
             json: new Update({param1: 'new value'}),
-            headers: new Update({a: 2})
+            headers: new Update({a: 2}),
+            query: new Update({sort: 'id'})
         });
 
         expect(newCall.toJson()).to.containSubset({
             title: 'Given When Title',
             json: {param1: 'new value', param2: 'value2'},
             headers: {a: 2},
+            query: {fields: '[fullName,age]', sort: 'id'}
         });
 
         expect(given.when.bind(given, 'Given When Title', 'Given when description', {json: new Update({param3: 'new value'})}))

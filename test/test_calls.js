@@ -127,6 +127,22 @@ describe('Testing Calls specifications', function () {
         done();
     });
 
+    it('Test altered call when changing query', function(done) {
+        let alteredCall = new AlteredCall(
+            baseCall, 'Hello world again', 'It is a description again', {query: { fields: '[birthday]'}});
+        let result = alteredCall.toJson();
+
+        expect(baseCall.query).to.deep.equal({fields: '[fullName,age]', sort: '-id'});
+        expect(alteredCall.query).to.deep.equal({fields: '[birthday]'});
+
+        expect(result).to.deep.equal({
+            title: 'Hello world again',
+            description: 'It is a description again',
+            query: {fields: '[birthday]'},
+        });
+        done();
+    });
+
     it('Test response with error', async function() {
         let baseCall = new BaseCall('Error in response', 'It is description',
             {

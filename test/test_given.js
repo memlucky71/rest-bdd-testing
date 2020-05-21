@@ -46,10 +46,12 @@ sort | -id
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-param1 | ? | ? | value1
-param2 | ? | ? | value2
+\`\`\`json
+{
+    "param1": "value1",
+    "param2": "value2"
+}
+\`\`\`
 
 ### Request Headers
 
@@ -93,9 +95,11 @@ Given when description
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-newParam | ? | ? | new param
+\`\`\`json
+{
+    "newParam": "new param"
+}
+\`\`\`
 
 ### Response: 200
 
@@ -142,10 +146,12 @@ sort | id
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-param1 | ? | ? | new value
-param2 | ? | ? | value2
+\`\`\`json
+{
+    "param1": "new value",
+    "param2": "value2"
+}
+\`\`\`
 
 ### Request Headers
 
@@ -189,11 +195,13 @@ Given when description
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-param1 | ? | ? | value1
-param2 | ? | ? | value2
-param3 | ? | ? | value3
+\`\`\`json
+{
+    "param1": "value1",
+    "param2": "value2",
+    "param3": "value3"
+}
+\`\`\`
 
 ### Request Headers
 
@@ -239,9 +247,11 @@ Given when description
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-param2 | ? | ? | value2
+\`\`\`json
+{
+    "param2": "value2"
+}
+\`\`\`
 
 ### Response: 200
 

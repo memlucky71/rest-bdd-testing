@@ -94,10 +94,12 @@ sort | -id
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-param1 | ? | ? | value1
-param2 | ? | ? | value2
+\`\`\`json
+{
+    "param1": "value1",
+    "param2": "value2"
+}
+\`\`\`
 
 ### Request Headers
 
@@ -137,11 +139,13 @@ Given when description
 
 ### Json
 
-Name | Required | Type | Example
----|---|---|---
-param1 | ? | ? | value1
-param2 | ? | ? | value2
-param3 | ? | ? | value3
+\`\`\`json
+{
+    "param1": "value1",
+    "param2": "value2",
+    "param3": "value3"
+}
+\`\`\`
 
 ### Request Headers
 

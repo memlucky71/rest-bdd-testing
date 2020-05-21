@@ -1,6 +1,6 @@
 {
   "name": "rest-bdd-testing",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Toolchain for testing REST API, in BDD style.",
   "main": "dist/index.js",
   "scripts": {
